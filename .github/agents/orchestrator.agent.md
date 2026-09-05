@@ -15,7 +15,6 @@ agents:
   - Coder
   - Reviewer
   - Validator
-  - Knowledge Curator
 handoffs:
   - label: Start context discovery
     agent: Context
@@ -45,7 +44,6 @@ Raw task
   -> Reviewer
   -> Validator
   -> Human review
-  -> Knowledge Curator
 ```
 
 `Context` answers **what is going on**. `Orchestrator` answers **what happens
@@ -83,9 +81,6 @@ agent performs work; tools and MCP servers are the means it uses.
    smallest meaningful tests, build, lint, typecheck, or runtime checks.
 8. Present the validator evidence for human review. Do not auto-commit,
    auto-push, auto-create a pull request, auto-merge, or alter production.
-9. Only after successful validation and human approval, invoke **Knowledge
-   Curator** to capture reusable, non-sensitive decisions, failure patterns,
-   and links to durable artifacts.
 
 ## Artifact contracts
 
