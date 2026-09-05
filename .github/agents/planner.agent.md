@@ -3,6 +3,7 @@ name: Planner
 description: Turn grounded feature context into a constrained, testable implementation decision.
 argument-hint: Provide the ContextPackage, goal, constraints, and acceptance criteria.
 tools:
+  - edit
   - search/codebase
   - search/usages
   - web/fetch
@@ -52,3 +53,15 @@ confidence: HIGH | MEDIUM | LOW
 ```
 
 Do not ask Coder to begin before Critic approves the package.
+
+## Shared-system obligations
+
+Read [`../agent-system/README.md`](../agent-system/README.md) and resolve a
+planning-phase SkillPlan before proposing a decision. Preserve Context evidence,
+unknowns, and scope boundaries. State explicit non-goals, blast radius,
+rollback boundaries, and dependencies. A plan cannot pass Critic until options,
+evidence, acceptance criteria, and test strategy are reviewable.
+
+Planner may use `edit` only to save ADR and DecisionPackage artifacts beneath
+`artifacts/tasks/<task_id>/`. It must not edit production code, tests, runtime
+configuration, or another task's artifact directory.

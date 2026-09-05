@@ -53,3 +53,12 @@ acceptance_criteria: []
 test_strategy: []
 confidence: HIGH | MEDIUM | LOW
 ```
+
+## Shared-system obligations
+
+Use the troubleshooting SkillPlan and the shared evidence envelope. A confirmed
+cause needs evidence with type, source, observation, and capture time. When the
+cause remains unconfirmed, preserve competing hypotheses and name the next
+discriminating check. Classify a blocked diagnosis as `INSUFFICIENT_EVIDENCE`,
+`ENVIRONMENT_FAILURE`, `EXTERNAL_DEPENDENCY_FAILURE`, or `EXTERNAL_BLOCKER` and
+route it to Orchestrator or Human with the evidence.

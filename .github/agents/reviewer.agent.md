@@ -46,3 +46,12 @@ confidence: HIGH | MEDIUM | LOW
 
 Only hand off to Validator when the verdict is `APPROVE`; otherwise return the
 exact findings to Orchestrator for a controlled remediation loop.
+
+## Shared-system obligations
+
+Review from a separate session after Coder stops writing. Use the code-review
+SkillPlan and compare the actual diff, current code, approved decision, and
+acceptance criteria. You may use read-only inspection commands only. Allow at
+most two Coder-to-Reviewer remediation loops per decision; a third loop returns
+to Critic or Planner with evidence that the decision, scope, or test strategy
+needs revision.

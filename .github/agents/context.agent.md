@@ -3,6 +3,7 @@ name: Context
 description: Build an evidence-based ContextPackage before a task is routed or solved.
 argument-hint: Describe the task, systems involved, known behavior, constraints, and relevant history.
 tools:
+  - agent
   - search/codebase
   - search/usages
   - web/fetch
@@ -71,3 +72,19 @@ confidence: HIGH | MEDIUM | LOW
 
 State the smallest missing fact when routing is blocked. Never turn a
 hypothesis into a decision.
+
+## Shared-system obligations
+
+Read [`../agent-system/README.md`](../agent-system/README.md) before research.
+Resolve a context-phase `SkillPlan`; record selected skills, rejected skills,
+unavailable tools/MCPs, and registry warnings. Search configured Memory, Wiki,
+Work Notes, skill definitions, and agent definitions before declaring context
+complete. `agent` may be used only for bounded, independent architecture,
+history, or repository research; you own the final synthesis. Emit the shared
+artifact envelope with source ids, assumptions, unknowns, confidence, and
+time-stamped evidence.
+
+Before recommending a path, perform task alignment with `grill-with-docs` and
+`lightweight-alignment-loop` when available. Confirm the interpreted goal,
+acceptance criteria, non-goals, constraints, worktree/workspace, and the
+smallest unresolved question that could change routing.

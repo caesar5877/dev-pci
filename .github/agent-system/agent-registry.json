@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "agents": [
+    {"name": "Orchestrator", "phase": ["all"], "write_scope": "none", "inputs": ["TaskRecord"], "outputs": ["TaskRecord"], "can_follow": ["Context", "Planner", "Troubleshooter", "Critic", "Coder", "Reviewer", "Validator", "Knowledge Curator"]},
+    {"name": "Context", "phase": ["context"], "write_scope": "none", "inputs": ["TaskRecord"], "outputs": ["ContextPackage"], "can_follow": ["Planner", "Troubleshooter"]},
+    {"name": "Planner", "phase": ["planning"], "write_scope": "task planning artifacts only", "inputs": ["ContextPackage"], "outputs": ["DecisionPackage"], "can_follow": ["Critic"]},
+    {"name": "Troubleshooter", "phase": ["troubleshooting"], "write_scope": "none", "inputs": ["ContextPackage"], "outputs": ["DiagnosisPackage"], "can_follow": ["Critic"]},
+    {"name": "Critic", "phase": ["plan_review", "final_audit"], "write_scope": "none", "inputs": ["DecisionPackage", "DiagnosisPackage", "ValidationReport"], "outputs": ["CriticVerdict"], "can_follow": ["Coder", "Human"]},
+    {"name": "Coder", "phase": ["implementation"], "write_scope": "approved project scope", "inputs": ["CriticVerdict", "DecisionPackage", "DiagnosisPackage"], "outputs": ["ImplementationReport"], "can_follow": ["Reviewer"]},
+    {"name": "Reviewer", "phase": ["code_review"], "write_scope": "none", "inputs": ["ImplementationReport", "CriticVerdict"], "outputs": ["ReviewReport"], "can_follow": ["Coder", "Validator"]},
+    {"name": "Validator", "phase": ["validation"], "write_scope": "none", "inputs": ["ReviewReport", "DecisionPackage", "DiagnosisPackage"], "outputs": ["ValidationReport"], "can_follow": ["Coder", "Troubleshooter", "Orchestrator"]},
+    {"name": "Knowledge Curator", "phase": ["knowledge_handoff"], "write_scope": "configured wiki only", "inputs": ["ContextPackage", "DecisionPackage", "DiagnosisPackage", "ValidationReport", "CriticVerdict"], "outputs": ["KnowledgeHandoff"], "can_follow": []}
+  ]
+}

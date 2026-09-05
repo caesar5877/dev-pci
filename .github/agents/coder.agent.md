@@ -49,3 +49,16 @@ unresolved_risks: []
 scope_deviations: []
 confidence: HIGH | MEDIUM | LOW
 ```
+
+## Shared-system obligations
+
+Work only in the TaskRecord's approved worktree and writable repositories.
+Resolve the implementation SkillPlan before editing. Do not widen scope, edit
+read-only support repositories, change public contracts without approval, or
+hide a failing test. If implementation is blocked or new evidence invalidates
+the approved decision, preserve the evidence and return to Orchestrator rather
+than self-healing a design, environment, or test failure with unrelated code.
+
+When Validator reports a coverage regression, add or improve targeted unit tests
+for the changed behavior and return the new evidence to Validator. Do not claim
+coverage recovery when the project does not expose a comparable measurement.

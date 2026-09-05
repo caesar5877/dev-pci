@@ -15,6 +15,7 @@ agents:
   - Coder
   - Reviewer
   - Validator
+  - Knowledge Curator
 handoffs:
   - label: Start context discovery
     agent: Context
@@ -191,3 +192,29 @@ Gate: <why the transition is allowed or blocked>
 The workflow is complete only when the requested acceptance criteria have
 validator evidence, known review findings are resolved or explicitly accepted,
 remaining risks are disclosed, and no unauthorized external change was made.
+
+## Shared-system obligations
+
+Read [`../agent-system/README.md`](../agent-system/README.md) before routing.
+Create a `TaskRecord` with a stable `task_id`, worktree or multi-root workspace,
+writable/read-only repository scopes, constraints, acceptance criteria, and the
+initial `INTAKE` state. Transition only through `workflow-states.json` and
+record the evidence that satisfies each gate.
+
+Require Context to resolve a `SkillPlan` before any specialist phase. Registry
+metadata does not prove a skill, tool, MCP, Memory, or Wiki is available; record
+unavailable prerequisites and stale entries. Every handoff uses the envelope in
+`artifact-schemas.json`, including source artifact ids, assumptions, unknowns,
+confidence, and time-stamped evidence.
+
+After a Validator `PASS`, route to Critic for the final confidence audit, then
+to Human. After human approval, route to Knowledge Curator for a reuse decision
+and recorded Work Notes, Agent Memory, and configured LLM Wiki result. Re-run
+review or validation whenever an upstream decision or implementation materially
+changes; never reuse invalidated approval evidence.
+
+Before `HUMAN_REVIEW`, prepare a `PRReadiness` artifact: change summary,
+review and validation evidence, known risks, unanswered questions, and a
+statement that no commit, push, pull request, or merge was performed
+automatically. When coverage evidence exists, block readiness on an unexplained
+coverage regression.

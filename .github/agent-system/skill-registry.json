@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "resolution_rules": {
+    "select": "Choose the smallest compatible set that covers the task profile and phase.",
+    "rank": ["phase_match", "task_and_domain_match", "input_contract_match", "tool_and_mcp_availability", "side_effect_compatibility", "explicit_user_preference"],
+    "forbid": ["Do not select a skill whose required tools are unavailable.", "Do not execute a skill outside its declared side-effect boundary.", "Do not resolve cyclic prerequisites silently.", "Do not treat registry metadata as proof that an MCP server is configured."],
+    "staleness": "Record missing paths, incompatible contracts, unavailable tools, duplicate ids, and stale versions in SkillPlan.registry_warnings."
+  },
+  "skills": [
+    {"id": "grill-with-docs", "phase": ["task_alignment"], "compatible_agents": ["Orchestrator", "Context", "Planner"], "domains": ["all"], "input_contract": "TaskRecord", "output_contract": "TaskProfile", "required_tools": ["read", "search"], "side_effects": "read_only"},
+    {"id": "lightweight-alignment-loop", "phase": ["task_alignment"], "compatible_agents": ["Orchestrator", "Context"], "domains": ["all"], "input_contract": "TaskRecord", "output_contract": "TaskProfile", "required_tools": ["read"], "side_effects": "read_only"},
+    {"id": "memory-preload", "phase": ["context"], "compatible_agents": ["Context"], "domains": ["all"], "input_contract": "TaskRecord", "output_contract": "Evidence", "required_tools": ["configured memory store"], "side_effects": "read_only"},
+    {"id": "wiki-search", "phase": ["context"], "compatible_agents": ["Context"], "domains": ["all"], "input_contract": "TaskRecord", "output_contract": "Evidence", "required_tools": ["configured wiki store"], "side_effects": "read_only"},
+    {"id": "repo-orientation", "phase": ["context"], "compatible_agents": ["Context"], "domains": ["all"], "input_contract": "TaskRecord", "output_contract": "Evidence", "required_tools": ["read", "search"], "side_effects": "read_only"},
+    {"id": "change-history-analysis", "phase": ["context", "troubleshooting"], "compatible_agents": ["Context", "Troubleshooter"], "domains": ["all"], "input_contract": "TaskRecord", "output_contract": "Evidence", "required_tools": ["read", "terminal"], "side_effects": "read_only"},
+    {"id": "skill-discovery", "phase": ["context"], "compatible_agents": ["Context"], "domains": ["all"], "input_contract": "TaskRecord", "output_contract": "SkillPlan", "required_tools": ["skill registry"], "side_effects": "read_only"},
+    {"id": "architecture-planning", "phase": ["planning"], "compatible_agents": ["Planner"], "domains": ["all"], "input_contract": "ContextPackage", "output_contract": "DecisionPackage", "required_tools": ["read", "search"], "side_effects": "read_only"},
+    {"id": "adr-analysis", "phase": ["planning", "plan_review"], "compatible_agents": ["Planner", "Critic"], "domains": ["architecture"], "input_contract": "ContextPackage", "output_contract": "DecisionPackage", "required_tools": ["read", "search"], "side_effects": "read_only"},
+    {"id": "task-breakdown", "phase": ["planning"], "compatible_agents": ["Planner"], "domains": ["all"], "input_contract": "ContextPackage", "output_contract": "DecisionPackage", "required_tools": ["read"], "side_effects": "read_only"},
+    {"id": "planning-with-files", "phase": ["planning"], "compatible_agents": ["Planner"], "domains": ["all"], "input_contract": "ContextPackage", "output_contract": "DecisionPackage", "required_tools": ["edit", "task artifact root"], "side_effects": "task planning artifacts only"},
+    {"id": "root-cause-analysis", "phase": ["troubleshooting"], "compatible_agents": ["Troubleshooter"], "domains": ["all"], "input_contract": "ContextPackage", "output_contract": "DiagnosisPackage", "required_tools": ["read", "search", "terminal"], "side_effects": "read_only"},
+    {"id": "matt-diagnose", "phase": ["troubleshooting"], "compatible_agents": ["Troubleshooter"], "domains": ["all"], "input_contract": "ContextPackage", "output_contract": "DiagnosisPackage", "required_tools": ["read", "search", "terminal"], "side_effects": "read_only"},
+    {"id": "runtime-diagnosis", "phase": ["troubleshooting", "validation"], "compatible_agents": ["Troubleshooter", "Validator"], "domains": ["runtime"], "input_contract": "ContextPackage", "output_contract": "DiagnosticEvidence", "required_tools": ["terminal"], "side_effects": "read_only"},
+    {"id": "decision-challenge", "phase": ["plan_review", "final_audit"], "compatible_agents": ["Critic"], "domains": ["all"], "input_contract": "DecisionPackage", "output_contract": "CriticVerdict", "required_tools": ["read", "search"], "side_effects": "read_only"},
+    {"id": "second-opinion", "phase": ["plan_review", "final_audit"], "compatible_agents": ["Critic"], "domains": ["all"], "input_contract": "DecisionPackage", "output_contract": "CriticVerdict", "required_tools": ["configured second-opinion provider"], "side_effects": "read_only"},
+    {"id": "incremental-implementation", "phase": ["implementation"], "compatible_agents": ["Coder"], "domains": ["all"], "input_contract": "DecisionPackage", "output_contract": "ImplementationReport", "required_tools": ["edit", "terminal"], "side_effects": "approved project scope"},
+    {"id": "independent-code-review", "phase": ["code_review"], "compatible_agents": ["Reviewer"], "domains": ["all"], "input_contract": "ImplementationReport", "output_contract": "ReviewReport", "required_tools": ["read", "search"], "side_effects": "read_only"},
+    {"id": "blast-radius-validation", "phase": ["validation"], "compatible_agents": ["Validator"], "domains": ["all"], "input_contract": "ImplementationReport", "output_contract": "ValidationReport", "required_tools": ["read", "terminal"], "side_effects": "read_only"},
+    {"id": "coverage-regression", "phase": ["validation"], "compatible_agents": ["Validator"], "domains": ["all"], "input_contract": "ImplementationReport", "output_contract": "ValidationReport", "required_tools": ["terminal"], "side_effects": "read_only"},
+    {"id": "knowledge-crystallization", "phase": ["knowledge_handoff"], "compatible_agents": ["Knowledge Curator"], "domains": ["all"], "input_contract": "ValidationReport", "output_contract": "KnowledgeHandoff", "required_tools": ["configured wiki store"], "side_effects": "configured wiki only"}
+  ]
+}

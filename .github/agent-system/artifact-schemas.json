@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "envelope_required": ["artifact_id", "task_id", "schema_version", "artifact_type", "producer", "created_at", "source_artifact_ids", "confidence", "assumptions", "unknowns", "evidence"],
+  "artifact_types": {
+    "TaskRecord": ["original_request", "interpreted_goal", "acceptance_criteria", "constraints", "worktree_or_workspace", "artifact_root", "writable_repositories", "read_only_repositories", "state"],
+    "ContextPackage": ["task_type", "system_scope", "current_behavior", "desired_behavior", "architecture_context", "relevant_history", "prior_decisions", "known_facts", "observations", "interpretations", "hypotheses", "contradictions", "related_skills", "related_agents", "skill_plan", "recommended_next_path"],
+    "SkillPlan": ["phase", "task_profile", "selected_skills", "rejected_skills", "unavailable_prerequisites", "required_tools", "registry_warnings", "resolution_status"],
+    "DecisionPackage": ["decision_type", "goal_or_symptom", "options_considered", "recommended_approach", "steps", "files_or_modules", "risks_and_tradeoffs", "acceptance_criteria", "test_strategy", "open_questions"],
+    "DiagnosisPackage": ["symptom", "reproduction_or_time_window", "hypotheses_considered", "root_cause_status", "root_cause", "contributing_conditions", "next_discriminating_check", "recommended_remediation", "rollback_or_containment", "acceptance_criteria", "test_strategy"],
+    "CriticVerdict": ["verdict", "findings", "missing_evidence", "required_changes", "residual_risks", "final_confidence_audit"],
+    "ImplementationReport": ["files_changed", "behavior_changed", "tests_added_or_updated", "commands_run", "results", "scope_deviations", "unresolved_risks"],
+    "ReviewReport": ["verdict", "findings", "verified_strengths", "test_gaps", "residual_risks", "evidence"],
+    "ValidationReport": ["acceptance_criteria_results", "validation_records", "coverage_baseline", "coverage_current", "coverage_decision", "failures", "validation_gaps", "overall_verdict", "recommended_next_agent"],
+    "PRReadiness": ["change_summary", "evidence_summary", "known_risks", "manual_review_questions", "commit_and_push_status"],
+    "KnowledgeHandoff": ["reusability_decision", "rationale", "normalized_knowledge", "task_summary", "sensitivity_review", "destination", "write_result", "follow_up_improvements"]
+  },
+  "evidence_item_required": ["type", "source", "observation", "captured_at"],
+  "confidence_values": ["HIGH", "MEDIUM", "LOW"],
+  "critic_verdict_values": ["APPROVE", "REVISE", "ESCALATE"],
+  "review_verdict_values": ["APPROVE", "CHANGES_REQUIRED", "ESCALATE"],
+  "validation_verdict_values": ["PASS", "FAIL", "INCOMPLETE"],
+  "validation_failure_classes": ["CODE_DEFECT", "UNKNOWN_TECHNICAL_FAILURE", "DESIGN_FAILURE", "TEST_DEFECT", "ENVIRONMENT_FAILURE", "EXTERNAL_DEPENDENCY_FAILURE"]
+}

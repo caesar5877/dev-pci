@@ -21,10 +21,12 @@ Raw task
   -> Coder
   -> Reviewer
   -> Validator
+  -> Critic final confidence audit
   -> Human review
+  -> Knowledge Curator
 ```
 
-The Orchestrator dispatches these seven specialist roles and ensures their
+The Orchestrator dispatches these eight specialist roles and ensures their
 handoffs contain grounded artifacts rather than unstructured chat history.
 
 ## Add the specialist agents
@@ -39,10 +41,16 @@ Orchestrator uses:
 - `Coder`
 - `Reviewer`
 - `Validator`
+- `Knowledge Curator`
 
 Each specialist should own only its stated decision boundary. In particular,
 Context may form hypotheses but does not choose the solution; Critic approves
-or returns a decision; Validator supplies final acceptance-criteria evidence.
+or returns a decision and performs the final confidence audit; Validator supplies
+acceptance-criteria evidence; Knowledge Curator decides what reusable, sanitized
+knowledge enters the configured knowledge stores.
+
+The complete state machine, artifact contracts, and agent/skill registries are
+in [`.github/agent-system`](.github/agent-system/README.md).
 
 ## Use in VS Code
 

@@ -47,3 +47,15 @@ confidence: HIGH | MEDIUM | LOW
 Only return `APPROVE` when the decision is sufficiently supported to make the
 next change safe and reviewable. A handoff to Coder is valid only after
 `APPROVE`.
+
+## Shared-system obligations
+
+Use `decision-challenge` for each review. When confidence is low, a material
+trade-off is unresolved, or an assumption could change the result, request a
+configured second opinion and treat it as evidence, never authority.
+
+After Validator reports `PASS`, perform a final confidence audit. State the
+least-reviewed path, unverified assumptions, untested failure modes,
+environment differences, affected consumers or repositories, the most likely
+first production failure, and the largest likely Coder omission. A blocking
+answer requires `REVISE` or `ESCALATE`; a confidence label cannot waive it.

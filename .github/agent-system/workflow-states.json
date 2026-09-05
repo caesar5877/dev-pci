@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "initial_state": "INTAKE",
+  "terminal_states": ["KNOWLEDGE_HANDOFF_COMPLETE", "STOPPED", "ESCALATED"],
+  "states": {
+    "INTAKE": {"owner": "Orchestrator", "next": ["CONTEXT_PENDING", "STOPPED"]},
+    "CONTEXT_PENDING": {"owner": "Context", "next": ["CONTEXT_READY", "ESCALATED"]},
+    "CONTEXT_READY": {"owner": "Orchestrator", "next": ["TASK_ALIGNMENT", "ESCALATED"]},
+    "TASK_ALIGNMENT": {"owner": "Orchestrator", "next": ["REGISTRY_DISCOVERY", "CONTEXT_PENDING", "ESCALATED"]},
+    "REGISTRY_DISCOVERY": {"owner": "Context", "next": ["PLANNING", "TROUBLESHOOTING", "ESCALATED"]},
+    "PLANNING": {"owner": "Planner", "next": ["PLAN_REVIEW", "ESCALATED"]},
+    "TROUBLESHOOTING": {"owner": "Troubleshooter", "next": ["PLAN_REVIEW", "ESCALATED"]},
+    "PLAN_REVIEW": {"owner": "Critic", "next": ["PLAN_APPROVED", "PLANNING", "TROUBLESHOOTING", "ESCALATED"]},
+    "PLAN_APPROVED": {"owner": "Orchestrator", "next": ["IMPLEMENTING", "STOPPED"]},
+    "IMPLEMENTING": {"owner": "Coder", "next": ["CODE_REVIEW", "IMPLEMENTATION_BLOCKED", "ESCALATED"]},
+    "IMPLEMENTATION_BLOCKED": {"owner": "Orchestrator", "next": ["PLANNING", "TROUBLESHOOTING", "ESCALATED", "STOPPED"]},
+    "CODE_REVIEW": {"owner": "Reviewer", "next": ["VALIDATING", "IMPLEMENTING", "ESCALATED"]},
+    "VALIDATING": {"owner": "Validator", "next": ["FINAL_AUDIT", "VALIDATION_FAILED", "ESCALATED"]},
+    "VALIDATION_FAILED": {"owner": "Orchestrator", "next": ["IMPLEMENTING", "TROUBLESHOOTING", "PLANNING", "ESCALATED"]},
+    "FINAL_AUDIT": {"owner": "Critic", "next": ["READY_FOR_HUMAN_REVIEW", "IMPLEMENTING", "TROUBLESHOOTING", "ESCALATED"]},
+    "READY_FOR_HUMAN_REVIEW": {"owner": "Orchestrator", "next": ["HUMAN_REVIEW", "STOPPED", "IMPLEMENTING"]},
+    "HUMAN_REVIEW": {"owner": "Human", "next": ["KNOWLEDGE_HANDOFF", "STOPPED", "IMPLEMENTING"]},
+    "KNOWLEDGE_HANDOFF": {"owner": "Knowledge Curator", "next": ["KNOWLEDGE_HANDOFF_COMPLETE", "ESCALATED"]},
+    "KNOWLEDGE_HANDOFF_COMPLETE": {"owner": "Knowledge Curator", "next": []},
+    "STOPPED": {"owner": "Orchestrator", "next": []},
+    "ESCALATED": {"owner": "Human", "next": []}
+  },
+  "gate_rules": {
+    "CONTEXT_READY": "ContextPackage has scope, evidence, unknowns, confidence, and a recommended path.",
+    "TASK_ALIGNMENT": "Goal, acceptance criteria, non-goals, constraints, worktree scope, and routing question are explicit.",
+    "REGISTRY_DISCOVERY": "SkillPlan contains compatible skills, prerequisite/tool availability, rejected candidates, and registry warnings.",
+    "PLAN_APPROVED": "CriticVerdict is APPROVE and has no unresolved blocking evidence gap.",
+    "VALIDATING": "ReviewReport is APPROVE, or every accepted exception is named by human review.",
+    "READY_FOR_HUMAN_REVIEW": "ValidationReport is PASS, coverage did not regress without an accepted exception, FinalConfidenceAudit has no blocking gap, and PRReadiness is prepared.",
+    "KNOWLEDGE_HANDOFF_COMPLETE": "Knowledge decision, destination, source artifacts, and write result are recorded."
+  }
+}
